@@ -24,4 +24,13 @@ public class MainClassTest {
             }
         }
     }
+
+    @Test
+    public void testGetClassString(){
+        String value = mainClass.getClassString();
+        if (!value.contains("hello") && !value.contains("Hello")) {
+            Assert.fail("Возвращаемое методом getClassString() значение '" + value + "' не содержит ни одной из подстрок" +
+                    " 'hello' и 'Hello'");
+        }
+    }
 }
