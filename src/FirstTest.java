@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.List;
 
 public class FirstTest {
 
@@ -123,6 +124,44 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testSearchAndCancelSearch() {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find search 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                "Java",
+                "Cannot find 'Search…' input",
+                15
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/page_list_item_container"),
+                "Cannot find any search result",
+                5
+        );
+
+        if (getListOfElements(By.id("org.wikipedia:id/page_list_item_container")).size() <= 1) {
+            Assert.fail("Search result contains less than two items");
+        }
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find 'X' to cancel search",
+                5
+        );
+
+        waitForElementNotPresent(
+                By.id("org.wikipedia:id/page_list_item_container"),
+                "Search result not empty",
+                5
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -160,7 +199,7 @@ public class FirstTest {
         return element;
     }
 
-    private void assertElementHasText(By by, String expectedElementText, String errorMessage){
+    private WebElement assertElementHasText(By by, String expectedElementText, String errorMessage){
         WebElement element = waitForElementPresent(by, "Cannot find element");
         String actualElementText = element.getText();
         Assert.assertEquals(
@@ -168,6 +207,11 @@ public class FirstTest {
                 expectedElementText,
                 actualElementText
         );
+        return element;
+    }
+
+    private List<WebElement> getListOfElements(By by){
+        return driver.findElements(by);
     }
 }
 
