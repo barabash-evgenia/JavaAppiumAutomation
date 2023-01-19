@@ -162,6 +162,35 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testCheckASpecificWordInEachSearchResult() {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find search 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                "Java",
+                "Cannot find 'Search…' input",
+                15
+        );
+
+        waitForElementPresent(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                "Cannot find any search result",
+                5
+        );
+
+        for (WebElement element: getListOfElements(By.id("org.wikipedia:id/page_list_item_title"))) {
+            assertElementContainsText(
+                    element,
+                    "Java",
+                    "Search result doesn't contain a word 'Java'");
+        }
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -206,6 +235,15 @@ public class FirstTest {
                 errorMessage,
                 expectedElementText,
                 actualElementText
+        );
+        return element;
+    }
+
+    private WebElement assertElementContainsText(WebElement element, String expectedValue, String errorMessage){
+        String actualElementText = element.getText();
+        Assert.assertTrue(
+                errorMessage,
+                actualElementText.contains(expectedValue)
         );
         return element;
     }
