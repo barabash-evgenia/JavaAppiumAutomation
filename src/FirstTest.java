@@ -496,6 +496,21 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testAssertTitle() {
+        String searchLine = "Java";
+        String articleTitle = "Object-oriented programming language";
+        findArticlesBySearchLine(searchLine);
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='" + articleTitle + "']"),
+                "Cannot find '" + articleTitle + "' topic",
+                15
+        );
+        assertElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find article title"
+        );
+    }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
@@ -726,5 +741,11 @@ public class FirstTest {
         );
     }
 
+    private void assertElementPresent(By by, String errorMessage) {
+        String defaultMessage = "An element '" + by.toString() + "' supposed to be present";
+        if (driver.findElement(by).getText() == null) {
+            throw new AssertionError(defaultMessage + " " + errorMessage);
+        }
+    }
 }
 
