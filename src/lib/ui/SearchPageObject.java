@@ -10,6 +10,7 @@ public class SearchPageObject extends MainPageObject{
                                 SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
                                 SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='{SUBSTRING}']",
                                 SEARCH_RESULT_ELEMENT = "//*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
+                                SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='%s']/following-sibling::*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='%s']",
                                 SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']",
                                 ANY_SEARCH_LIST_RESULT = "org.wikipedia:id/page_list_item_container";
 
@@ -48,6 +49,11 @@ public class SearchPageObject extends MainPageObject{
     public void waitForSearchResult(String substring) {
         String searchResultXpath = getResultSearchElement(substring);
         this.waitForElementPresent(By.xpath(searchResultXpath), "Cannot find search result with substring " + substring);
+    }
+
+    public void waitForElementByTitleAndDescription(String title, String description) {
+        this.waitForElementPresent(By.xpath(String.format(SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL, title, description)),
+                "Cannot find search result with title '" + title + "' and description '" + description + "'");
     }
 
     public void clickByArticleWithSubstring(String substring) {
