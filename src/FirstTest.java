@@ -31,14 +31,12 @@ public class FirstTest {
         capabilities.setCapability("appActivity", ".main.MainActivity");
         capabilities.setCapability("udid", "emulator-5554");
         capabilities.setCapability("app", "/Users/evgenia_barabash/Desktop/JavaAppiumAutomation/JavaAppiumAutomation/apks/org.wikipedia.apk");
+        capabilities.setCapability("orientation", "PORTRAIT");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
 
     @After
     public void tearDown() {
-        if (driver.getOrientation() != ScreenOrientation.PORTRAIT) {
-            driver.rotate(ScreenOrientation.PORTRAIT);
-        }
         driver.quit();
     }
 
