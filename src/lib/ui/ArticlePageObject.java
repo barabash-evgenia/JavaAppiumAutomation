@@ -13,7 +13,8 @@ public class ArticlePageObject extends MainPageObject{
                                 ADD_TO_MY_LIST_OVERLAY = "org.wikipedia:id/onboarding_button",
                                 MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
                                 MY_LIST_OK_BUTTON = "//*[@text='OK']",
-                                CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
+                                CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']",
+                                SELECT_FOLDER_BY_NAME = "//android.widget.TextView[@text='%s']";
 
     public ArticlePageObject(AppiumDriver driver) {
         super(driver);
@@ -32,7 +33,12 @@ public class ArticlePageObject extends MainPageObject{
         this.swipeUpToFindElement(By.xpath(FOOTER_ELEMENT), "Cannot find the end of the article", 20);
     }
     
-    public void addArticleToMyList(String nameOfFolder) {
+    public void addArticleToNewList(String nameOfFolder) {
+        this.waitForElementPresent(
+                By.xpath(OPTIONS_BUTTON),
+                "Cannot find button to open article options",
+                5
+        );
         this.waitForElementAndClick(
                 By.xpath(OPTIONS_BUTTON),
                 "Cannot find button to open article options",
@@ -66,11 +72,42 @@ public class ArticlePageObject extends MainPageObject{
         );
     }
 
+    public void addArticleToExistingList(String nameOfFolder) {
+        this.waitForElementPresent(
+                By.xpath(OPTIONS_BUTTON),
+                "Cannot find button to open article options",
+                5
+        );
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_BUTTON),
+                "Cannot find button to open article options",
+                5
+        );
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find option to add article to reading list",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath(String.format(SELECT_FOLDER_BY_NAME, nameOfFolder)),
+                "Cannot find an existing folder " + nameOfFolder,
+                5
+        );
+    }
+
     public void closeArticle() {
         this.waitForElementAndClick(
                 By.xpath(CLOSE_ARTICLE_BUTTON),
                 "Cannot close article, cannot find X link",
                 5
+        );
+    }
+
+    public void assertArticleTitlePresent() {
+        this.assertElementPresent(
+                By.id(TITLE),
+                "Cannot find article title"
         );
     }
 

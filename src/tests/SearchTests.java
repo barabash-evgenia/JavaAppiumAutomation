@@ -44,4 +44,21 @@ public class SearchTests extends CoreTestCase {
         searchPageObject.waitForEmptyResultsLabel();
         searchPageObject.assertThereIsNoResultOfSearch();
     }
+
+    @Test
+    public void testSearchAndCancelSearch() {
+        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        searchPageObject.initSearchInput();
+        String searchLine = "Java";
+        searchPageObject.typeSearchLine(searchLine);
+        searchPageObject.waitForAnySearchResult();
+        int amountOfSearchResults = searchPageObject.getAmountOfFoundArticles(searchLine);
+        if (amountOfSearchResults <= 1) {
+            fail("Search result contains less than two items");
+        }
+        searchPageObject.waitForCancelButtonToAppear();
+        searchPageObject.clickCancelButton();
+        searchPageObject.waitForAnySearchResultToDisappear();
+    }
+
 }
