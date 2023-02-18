@@ -16,12 +16,12 @@ public class FirstTest extends CoreTestCase {
     @Test
     public void testCompareSearchFieldText() {
         mainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/search_container"),
+                "id:org.wikipedia:id/search_container",
                 "Cannot find search 'Search Wikipedia' input",
                 5
         );
         mainPageObject.assertElementHasText(
-                By.id("org.wikipedia:id/search_src_text"),
+                "id:org.wikipedia:id/search_src_text",
                 "Search…",
                 "Search field has an unexpected text"
         );
@@ -30,25 +30,25 @@ public class FirstTest extends CoreTestCase {
     @Test
     public void testCheckASpecificWordInEachSearchResult() {
         mainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/search_container"),
+                "id:org.wikipedia:id/search_container",
                 "Cannot find search 'Search Wikipedia' input",
                 5
         );
 
         mainPageObject.waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search…')]"),
+                "xpath://*[contains(@text,'Search…')]",
                 "Java",
                 "Cannot find 'Search…' input",
                 15
         );
 
         mainPageObject.waitForElementPresent(
-                By.id("org.wikipedia:id/page_list_item_title"),
+                "id:org.wikipedia:id/page_list_item_title",
                 "Cannot find any search result",
                 5
         );
 
-        for (WebElement element: mainPageObject.getListOfElements(By.id("org.wikipedia:id/page_list_item_title"))) {
+        for (WebElement element: mainPageObject.getListOfElements("id:org.wikipedia:id/page_list_item_title")) {
             mainPageObject.assertElementContainsText(
                     element,
                     "Java",

@@ -9,12 +9,12 @@ public class WelcomePageObject extends MainPageObject{
         super(driver);
     }
 
-    private static final String ELEMENT_TYPE_STATIC_TEXT = "//XCUIElementTypeStaticText[@name='%s']",
-                                ELEMENT_TYPE_BUTTON = "//XCUIElementTypeButton[@name='%s']";
+    private static final String ELEMENT_TYPE_STATIC_TEXT = "xpath://XCUIElementTypeStaticText[@name='%s']",
+                                ELEMENT_TYPE_BUTTON = "xpath://XCUIElementTypeButton[@name='%s']";
 
     public void waitForLearnMoreLink() {
         this.waitForElementPresent(
-                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "Learn more about Wikipedia")),
+                String.format(ELEMENT_TYPE_STATIC_TEXT, "Learn more about Wikipedia"),
                 "Cannot find 'Learn more about Wikipedia' link",
                 10
         );
@@ -22,7 +22,7 @@ public class WelcomePageObject extends MainPageObject{
 
     public void waitForNewWayToExploreText() {
         this.waitForElementPresent(
-                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "New ways to explore")),
+                String.format(ELEMENT_TYPE_STATIC_TEXT, "New ways to explore"),
                 "Cannot find 'New ways to explore' text",
                 10
         );
@@ -30,7 +30,7 @@ public class WelcomePageObject extends MainPageObject{
 
     public void waitForAddOrEditPreferredLanguagesLink() {
         this.waitForElementPresent(
-                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "Add or edit preferred languages")),
+                String.format(ELEMENT_TYPE_STATIC_TEXT, "Add or edit preferred languages"),
                 "Cannot find 'Add or edit preferred languages' link",
                 10
         );
@@ -38,7 +38,7 @@ public class WelcomePageObject extends MainPageObject{
 
     public void waitForLearnMoreAboutDataCollectedLink() {
         this.waitForElementPresent(
-                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "Learn more about data collected")),
+                String.format(ELEMENT_TYPE_STATIC_TEXT, "Learn more about data collected"),
                 "Cannot find 'Learn more about data collected' link",
                 10
         );
@@ -46,7 +46,7 @@ public class WelcomePageObject extends MainPageObject{
 
     public void clickNextButton() {
         this.waitForElementAndClick(
-                By.xpath(String.format(ELEMENT_TYPE_BUTTON, "Next")),
+                String.format(ELEMENT_TYPE_BUTTON, "Next"),
                 "Cannot find and click 'Next' button",
                 10
         );
@@ -54,7 +54,7 @@ public class WelcomePageObject extends MainPageObject{
 
     public void clickGetStartedButton() {
         this.waitForElementAndClick(
-                By.xpath(String.format(ELEMENT_TYPE_BUTTON, "Get started")),
+                String.format(ELEMENT_TYPE_BUTTON, "Get started"),
                 "Cannot find and click 'Get started' button",
                 10
         );
