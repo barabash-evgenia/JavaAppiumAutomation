@@ -9,12 +9,12 @@ public class WelcomePageObject extends MainPageObject{
         super(driver);
     }
 
-    private static final String ELEMENT_TYPE_STATIC_TEXT = "//XCUIElementTypeStaticText[@name='%s']";
+    private static final String ELEMENT_TYPE_STATIC_TEXT = "//XCUIElementTypeStaticText[@name='%s']",
+                                ELEMENT_TYPE_BUTTON = "//XCUIElementTypeButton[@name='%s']";
 
     public void waitForLearnMoreLink() {
         this.waitForElementPresent(
-//                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "Learn more about Wikipedia")),
-                By.xpath("//XCUIElementTypeStaticText[@name='Learn more about Wikipedia']"),
+                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "Learn more about Wikipedia")),
                 "Cannot find 'Learn more about Wikipedia' link",
                 10
         );
@@ -22,9 +22,7 @@ public class WelcomePageObject extends MainPageObject{
 
     public void waitForNewWayToExploreText() {
         this.waitForElementPresent(
-//                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "New ways to explore")),
-                By.xpath("//XCUIElementTypeStaticText[@name='New ways to explore']"),
-
+                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "New ways to explore")),
                 "Cannot find 'New ways to explore' text",
                 10
         );
@@ -48,8 +46,7 @@ public class WelcomePageObject extends MainPageObject{
 
     public void clickNextButton() {
         this.waitForElementAndClick(
-//                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "Next")),
-                By.xpath("//XCUIElementTypeStaticText[@name='Next']"),
+                By.xpath(String.format(ELEMENT_TYPE_BUTTON, "Next")),
                 "Cannot find and click 'Next' button",
                 10
         );
@@ -57,10 +54,9 @@ public class WelcomePageObject extends MainPageObject{
 
     public void clickGetStartedButton() {
         this.waitForElementAndClick(
-                By.xpath(String.format(ELEMENT_TYPE_STATIC_TEXT, "Get started")),
+                By.xpath(String.format(ELEMENT_TYPE_BUTTON, "Get started")),
                 "Cannot find and click 'Get started' button",
                 10
         );
     }
-
 }
