@@ -1,18 +1,18 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 
-public class SearchPageObject extends MainPageObject{
+abstract public class SearchPageObject extends MainPageObject {
 
-    private static final String SEARCH_INIT_ELEMENT = "xpath://*[contains(@text,'Search Wikipedia')]",
-                                SEARCH_INPUT = "xpath://*[contains(@text,'Search…')]",
-                                SEARCH_CANCEL_BUTTON = "id:org.wikipedia:id/search_close_btn",
-                                SEARCH_RESULT_BY_SUBSTRING_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='%s']",
-                                SEARCH_RESULT_ELEMENT = "xpath://*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
-                                SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_title' and @text='%s']/following-sibling::*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='%s']",
-                                SEARCH_EMPTY_RESULT_ELEMENT = "xpath://*[@text='No results found']",
-                                ANY_SEARCH_LIST_RESULT = "id:org.wikipedia:id/page_list_item_container";
+    protected static String
+            SEARCH_INIT_ELEMENT,
+            SEARCH_INPUT,
+            SEARCH_CANCEL_BUTTON,
+            SEARCH_RESULT_BY_SUBSTRING_TPL,
+            SEARCH_RESULT_ELEMENT,
+            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION_TPL,
+            SEARCH_EMPTY_RESULT_ELEMENT,
+            ANY_SEARCH_LIST_RESULT;
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -37,7 +37,7 @@ public class SearchPageObject extends MainPageObject{
 
 
     public void typeSearchLine(String searchLine) {
-        this.waitForElementAndSendKeys(SEARCH_INPUT, searchLine,"Cannot find and type into input", 5);
+        this.waitForElementAndSendKeys(SEARCH_INPUT, searchLine, "Cannot find and type into input", 5);
     }
 
     public void waitForSearchResult(String substring) {
@@ -75,11 +75,11 @@ public class SearchPageObject extends MainPageObject{
     }
 
     public void waitForAnySearchResult() {
-        this.waitForElementPresent(ANY_SEARCH_LIST_RESULT, "Cannot find any search result", 5);
+        this.waitForElementPresent(ANY_SEARCH_LIST_RESULT, "Cannot find any search result", 15);
     }
 
     public void waitForAnySearchResultToDisappear() {
-        this.waitForElementNotPresent(ANY_SEARCH_LIST_RESULT, "Search result is still present", 5);
+        this.waitForElementNotPresent(ANY_SEARCH_LIST_RESULT, "Search result is still present", 10);
     }
 
 }
