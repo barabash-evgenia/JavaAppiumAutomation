@@ -55,25 +55,47 @@ public class MyListsTests extends CoreTestCase {
         ArticlePageObject articlePageObject = ArticlePageObjectFactory.get(driver);
         NavigationUIPageObject navigationUI = NavigationUIPageObjectFactory.get(driver);;
         MyListsPageObject myListsPageObject = MyListsPageObjectFactory.get(driver);
-
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine(searchLine);
         searchPageObject.clickByArticleWithSubstring(firstArticleTitle);
-        articlePageObject.addArticleToNewList(nameOfFolder);
+        if (Platform.getInstance().isAndroid()){
+            articlePageObject.addArticleToNewList(nameOfFolder);
+        } else {
+            articlePageObject.addArticlesToMySaved();
+        }
         articlePageObject.closeArticle();
-
-        searchPageObject.initSearchInput();
-        searchPageObject.typeSearchLine(searchLine);
+        if (Platform.getInstance().isAndroid()){
+            searchPageObject.initSearchInput();
+            searchPageObject.typeSearchLine(searchLine);
+        }
         searchPageObject.clickByArticleWithSubstring(secondArticleTitle);
-        articlePageObject.addArticleToExistingList(nameOfFolder);
+        if (Platform.getInstance().isAndroid()){
+            articlePageObject.addArticleToExistingList(nameOfFolder);
+        } else {
+            articlePageObject.addArticlesToMySaved();
+        }
         articlePageObject.closeArticle();
-
+        if (Platform.getInstance().isIOS()){
+            searchPageObject.clickCancelButton();
+        }
         navigationUI.clickMyLists();
-        myListsPageObject.openFolderByName(nameOfFolder);
-        myListsPageObject.waitForArticleToAppearByTitle(firstArticleTitle.toLowerCase());
-        myListsPageObject.waitForArticleToAppearByTitle(secondArticleTitle.toLowerCase());
-        myListsPageObject.swipeByArticleToDelete(firstArticleTitle.toLowerCase());
-        myListsPageObject.waitForArticleToDisappearByTitle(firstArticleTitle.toLowerCase());
-        myListsPageObject.waitForArticleToAppearByTitle(secondArticleTitle.toLowerCase());
+        if (Platform.getInstance().isAndroid()){
+            myListsPageObject.openFolderByName(nameOfFolder);
+        } else {
+            myListsPageObject.closeSyncYourSavedArticlesWindow();
+        }
+        if (Platform.getInstance().isAndroid()){
+            myListsPageObject.waitForArticleToAppearByTitle(firstArticleTitle.toLowerCase());
+            myListsPageObject.waitForArticleToAppearByTitle(secondArticleTitle.toLowerCase());
+            myListsPageObject.swipeByArticleToDelete(firstArticleTitle.toLowerCase());
+            myListsPageObject.waitForArticleToDisappearByTitle(firstArticleTitle.toLowerCase());
+            myListsPageObject.waitForArticleToAppearByTitle(secondArticleTitle.toLowerCase());
+        } else {
+            myListsPageObject.waitForArticleToAppearByTitle(firstArticleTitle);
+            myListsPageObject.waitForArticleToAppearByTitle(secondArticleTitle);
+            myListsPageObject.swipeByArticleToDelete(firstArticleTitle);
+            myListsPageObject.waitForArticleToDisappearByTitle(firstArticleTitle);
+            myListsPageObject.waitForArticleToAppearByTitle(secondArticleTitle);
+        }
     }
 }
